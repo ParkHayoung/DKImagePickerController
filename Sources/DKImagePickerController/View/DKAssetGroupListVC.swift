@@ -219,7 +219,9 @@ class DKAssetGroupListVC: UITableViewController, DKImageGroupDataManagerObserver
 
             strongSelf.groups = groups
             strongSelf.selectedGroup = strongSelf.defaultAssetGroupOfAppropriate()
-            if let selectedGroup = strongSelf.selectedGroup, let displayGroups = strongSelf.displayGroups, let row = displayGroups.index(of: selectedGroup) {
+            if let selectedGroup = strongSelf.selectedGroup,
+                let displayGroups = strongSelf.displayGroups,
+                let row = displayGroups.firstIndex(of: selectedGroup) {
                 strongSelf.tableView.selectRow(at: IndexPath(row: row, section: 0), animated: false, scrollPosition: .none)
                 strongSelf.selectedGroupDidChangeBlock?(strongSelf.selectedGroup)
             }
@@ -274,6 +276,7 @@ class DKAssetGroupListVC: UITableViewController, DKImageGroupDataManagerObserver
         }
         
         cell.configure(with: assetGroup, tag: indexPath.row + 1, dataManager: groupDataManager, imageRequestOptions: groupThumbnailRequestOptions)
+        (cell as? UITableViewCell)?.contentView.backgroundColor = self.imagePickerController.UIDelegate.imagePickerControllerGroupCellBackgroundColor()
 
         return cell as! UITableViewCell
     }
@@ -317,7 +320,7 @@ class DKAssetGroupListVC: UITableViewController, DKImageGroupDataManagerObserver
     }
 
     func groupDidRemove(groupId: String) {
-        guard let row = self.groups?.index(of: groupId) else { return }
+        guard let row = self.groups?.firstIndex(of: groupId) else { return }
 
         self.willChangeValue(forKey: "preferredContentSize")
 

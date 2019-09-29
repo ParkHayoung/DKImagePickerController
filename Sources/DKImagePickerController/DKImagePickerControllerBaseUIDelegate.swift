@@ -75,6 +75,10 @@ public protocol DKImagePickerControllerUIDelegate {
 
     func imagePickerControllerGroupCell() -> DKAssetGroupCellType.Type
 
+    func imagePickerControllerGroupCellBackgroundColor() -> UIColor
+
+    func imagePickerControllerPopoverArrowColor() -> UIColor
+
     /**
       Provide a custom button to be used as the titleView for imagePickerController's navigationItem.
     */
@@ -275,6 +279,18 @@ open class DKImagePickerControllerBaseUIDelegate: NSObject, DKImagePickerControl
 
     open func imagePickerControllerPrepareGroupListViewController(_ listViewController: UITableViewController) {
         // nothing by default, override in subclasses to customize group list table view
+    }
+
+    open func imagePickerControllerGroupCellBackgroundColor() -> UIColor {
+        return UIColor.white
+    }
+
+    open func imagePickerControllerPopoverArrowColor() -> UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor.systemBackground
+        } else {
+            return UIColor.white
+        }
     }
 }
 
