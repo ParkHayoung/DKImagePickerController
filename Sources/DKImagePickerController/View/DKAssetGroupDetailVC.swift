@@ -235,7 +235,9 @@ open class DKAssetGroupDetailVC: UIViewController,
         switch imagePickerController.UIDelegate.imagePickerControllerGroupListPresentationStyle() {
         case .popover:
             if let button = self.selectGroupButton {
-                DKPopoverViewController.popoverViewController(groupListVC, fromView: button)
+                DKPopoverViewController.popoverViewController(groupListVC,
+                                                              fromView: button,
+                                                              arrowColor: imagePickerController.UIDelegate.imagePickerControllerPopoverArrowColor())
             }
         case .presented:
             let navigationController = DKUINavigationController()
